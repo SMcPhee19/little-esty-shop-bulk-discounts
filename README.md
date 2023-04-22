@@ -73,7 +73,7 @@ Potential Refactor Opportunities
     4. Merchant Bulk Discount Show
     As a merchant
     When I vivit my bulk discount show page
-    [ ] Then I see the bulk discount's quantity threshold and percentage discount
+    [X] Then I see the bulk discount's quantity threshold and percentage discount
 
     5. Merchant Bulk Discount Edit    
     As a merchant
