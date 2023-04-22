@@ -10,15 +10,20 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
-    # require 'pry'; binding.pry
     @merchant = Merchant.find(params[:merchant_id])
-    # @bulk_discount = BulkDiscount.new
     @bulk_discount = @merchant.bulk_discounts.new
+  end
+
+  def create
+    @merchant = Merchant.find(params[:id])
+    @bulk_discount = @merchant.bulk_discounts.new(bulk_discount_params)
+    @bulk_discount.save
+    redirect_to "/merchants/#{@merchant.id}/bulk_discounts"
   end
 
   private
 
   def bulk_discount_params
-    params.require(:bulk_discount).permit(:name, :percent, :quantity)
+    params.permit(:name, :percent, :quantity)
   end
 end
