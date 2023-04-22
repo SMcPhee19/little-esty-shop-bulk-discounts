@@ -55,7 +55,7 @@ Potential Refactor Opportunities
     2. Merchant Bulk Discount Create
     As a merchant...
     When I visit my bulk discounts index
-    [ ]Then I see a link to create a new discount
+    [X]Then I see a link to create a new discount
     [ ]When I click this link
     [ ]Then I am taken to a new page where I see a form to add a new bulk discount
     [ ]When I fill in the form with valid data
