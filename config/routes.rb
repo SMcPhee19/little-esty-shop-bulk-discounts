@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "/merchants/:id/dashboard", to: 'merchant/dashboards#show'
 
   post "/merchants/:id/bulk_discounts/new", to: 'bulk_discounts#create'
+  patch "/merchants/:id/bulk_discounts/:id/edit", to: 'bulk_discounts#update'
 
   resources :merchants, except: [:index, :show, :edit, :destroy, :new, :create, :update]  do
     resources :bulk_discounts
