@@ -81,10 +81,10 @@ Potential Refactor Opportunities
     [X] Then I see a link to edit the bulk discount
     [X] When I click this link
     [X] Then I am taken to a new page with a form to edit the discount
-    [ ] And I see that the discounts current attributes are pre-poluated in the form
-    [ ] When I change any/all of the information and click submit
-    [ ] Then I am redirected to the bulk discount's show page
-    [ ] And I see that the discount's attributes have been updated
+    [X] And I see that the discounts current attributes are pre-poluated in the form
+    [X] When I change any/all of the information and click submit
+    [X] Then I am redirected to the bulk discount's show page
+    [X] And I see that the discount's attributes have been updated
 
     6. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
     As a merchant
