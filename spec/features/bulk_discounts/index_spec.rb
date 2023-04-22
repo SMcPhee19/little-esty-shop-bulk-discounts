@@ -107,9 +107,10 @@ RSpec.describe 'merchant bulk discount index page' do
     expect(page).to have_content('Bulk Discount: New')
   end
 
-  it 'when in the bulk discount index page, I see a link to delete a bulk discount' do
+  it 'when in the bulk discount index page, I see a links to delete a bulk discount' do
     visit merchant_bulk_discounts_path(@merchant)
-    save_and_open_page
+
+    expect(page).to have_link("Delete #{@bulk1.name}")
     expect(page).to have_link("Delete #{@bulk2.name}")
   end
 
@@ -119,6 +120,7 @@ RSpec.describe 'merchant bulk discount index page' do
       click_link("Delete #{@bulk2.name}")
 
       expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
+
       expect(page).to have_content(@bulk1.name)
       expect(page).to have_content(@bulk1.percent)
       expect(page).to have_content(@bulk1.quantity)
