@@ -277,13 +277,28 @@ RSpec.describe 'Merchant Dashboard/Show Page' do
     it 'when in the bulk discount index page, the link takes me to the bulk discount show page' do
       visit merchant_bulk_discounts_path(@merchant)
       click_link(@bulk1.name)
-      expect(current_path).to eq("/merchants/:merchant_id/bulk_discounts/#{@bulk1.id}")
+      expect(current_path).to eq("/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}")
       expect(page).to have_content('Bulk Discount: Show')
 
       visit merchant_bulk_discounts_path(@merchant)
       click_link(@bulk2.name)
-      expect(current_path).to eq("/merchants/:merchant_id/bulk_discounts/#{@bulk2.id}")
+      expect(current_path).to eq("/merchants/#{@merchant.id}/bulk_discounts/#{@bulk2.id}")
       expect(page).to have_content('Bulk Discount: Show')
+    end
+
+    it 'when in the bulk discount index page, I see a link to create a new bulk discount' do
+      visit merchant_bulk_discounts_path(@merchant)
+
+      within '#new-merchant-bulk' do
+        expect(page).to have_link('New Bulk Discount')
+      end
+    end
+
+    it 'when in the bulk discount index page, clicking on the link takes me to the new bulk discount page' do
+      visit merchant_bulk_discounts_path(@merchant)
+      click_link('New Bulk Discount')
+      expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant))
+      expect(page).to have_content('Bulk Discount: New')
     end
   end
 end
