@@ -12,3 +12,9 @@ Invoice.destroy_all
 Item.destroy_all
 Customer.destroy_all
 Merchant.destroy_all
+BulkDiscount.destroy_all
+
+# @bulk1 = BulkDiscount.create!(percent: 33, quantity: 4, merchant_id: 1)
+# @bulk2 = BulkDiscount.create!(percent: 75, quantity: 61, merchant_id: 1)
+# @bulk3 = BulkDiscount.create!(percent: 43, quantity: 94, merchant_id: 2)
+# @bulk4 = BulkDiscount.create!(percent: 30, quantity: 9, merchant_id: 2)
