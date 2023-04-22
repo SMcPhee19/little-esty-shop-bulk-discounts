@@ -65,10 +65,10 @@ Potential Refactor Opportunities
     3. Merchant Bulk Discount Delete
     As a merchant
     When I visit the bulk discounts index...
-    [ ] Then next to each bulk discount I see a link to delete it
-    [ ] When I click this link
-    [ ] Then I am redirected back to the bulk discounts index page
-    [ ] And I no longer see the discount listed
+    [X] Then next to each bulk discount I see a link to delete it
+    [X] When I click this link
+    [X] Then I am redirected back to the bulk discounts index page
+    [X] And I no longer see the discount listed
 
     4. Merchant Bulk Discount Show
     As a merchant
