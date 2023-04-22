@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get "/merchants/:id/dashboard", to: 'merchant/dashboards#show'
-  
+
+  post "/merchants/:id/bulk_discounts/new", to: 'bulk_discounts#create'
+
   resources :merchants, except: [:index, :show, :edit, :destroy, :new, :create, :update]  do
     resources :bulk_discounts
     resources :items, only: [:index, :show, :edit, :update, :new, :create], controller: "merchant/items"
