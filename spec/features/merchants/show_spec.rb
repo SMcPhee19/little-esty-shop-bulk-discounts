@@ -5,9 +5,9 @@ RSpec.describe 'Merchant Dashboard/Show Page' do
     @merchant = create(:merchant)
     @merchant1 = create(:merchant)
 
-    @bulk1 = create(:bulk_discount, merchant_id: @merchant.id)
-    @bulk2 = create(:bulk_discount, merchant_id: @merchant.id)
-    @bulk3 = create(:bulk_discount, merchant_id: @merchant1.id)
+    @bulk1 = @merchant.bulk_discounts.create!(percent: 49, quantity: 40, name: '49 off 40')
+    @bulk2 = @merchant.bulk_discounts.create!(percent: 43, quantity: 59, name: '43 off 59')
+    @bulk3 = @merchant1.bulk_discounts.create!(percent: 21, quantity: 7, name: '21 off 7')
 
     @item1 = create(:item, merchant_id: @merchant.id)
     @item2 = create(:item, merchant_id: @merchant.id)
@@ -212,7 +212,7 @@ RSpec.describe 'Merchant Dashboard/Show Page' do
 
         expect(current_path).to eq(merchant_invoice_path(@merchant, @invoice6))
       end
-    end7890
+    end
 
     it 'displays invoice creation formatted date like "Monday, July 18, 2019"' do
       visit "/merchants/#{@merchant.id}/dashboard"
@@ -234,9 +234,56 @@ RSpec.describe 'Merchant Dashboard/Show Page' do
 
   describe 'bulk discounts' do
     it 'shows a link to all of a merchantss bulk discounts' do
-      visit merchant_bulk_discount_path(@merchant)
+      visit "/merchants/#{@merchant.id}/dashboard"
 
-      expect(page).to have_link('My Bulk Discounts')
+      within '#bulk-discount' do
+        expect(page).to have_link('My Bulk Discounts')
+      end
+    end
+
+    it 'when this link is clicked it takes me to the bulk discount index page' do
+      visit "/merchants/#{@merchant.id}/dashboard"
+
+      within '#bulk-discount' do
+        click_link('My Bulk Discounts')
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant))
+      end
+    end
+
+    it 'when in the bulk discount index page I see a list of all of my bulk discounts' do
+      visit merchant_bulk_discounts_path(@merchant)
+
+      expect(page).to have_content('My Bulk Discounts')
+
+      within '#merchant-bulk' do
+        expect(page).to have_content(@bulk1.name)
+        expect(page).to have_content(@bulk1.percent)
+        expect(page).to have_content(@bulk1.quantity)
+        expect(page).to_not have_content(@bulk3.name)
+      end
+    end
+
+    it 'when in the bulk discount index page, I see a link to that discounts show page' do
+      visit merchant_bulk_discounts_path(@merchant)
+
+      within '#merchant-bulk' do
+        expect(page).to have_link(@bulk1.name)
+        expect(page).to have_link(@bulk2.name)
+        expect(page).to_not have_link(@bulk3.name)
+      end
+    end
+
+    it 'when in the bulk discount index page, the link takes me to the bulk discount show page' do
+      visit merchant_bulk_discounts_path(@merchant)
+      click_link(@bulk1.name)
+      expect(current_path).to eq("/merchants/:merchant_id/bulk_discounts/#{@bulk1.id}")
+      expect(page).to have_content('Bulk Discount: Show')
+
+      visit merchant_bulk_discounts_path(@merchant)
+      click_link(@bulk2.name)
+      expect(current_path).to eq("/merchants/:merchant_id/bulk_discounts/#{@bulk2.id}")
+      expect(page).to have_content('Bulk Discount: Show')
     end
   end
 end
