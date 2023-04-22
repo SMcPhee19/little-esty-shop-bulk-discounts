@@ -57,10 +57,12 @@ RSpec.describe 'merchant bulk discount show page' do
 
   it 'when in the merchant bulk discount show page, I see the bulk discount attributes' do
     visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}"
+    expect(page).to have_content('Bulk Discount: Show')
     
-    expect(page).to have_content("Bulk Discount: Show")
-    expect(page).to have_content(@bulk1.name)
-    expect(page).to have_content(@bulk1.percent)
-    expect(page).to have_content(@bulk1.quantity)
+    within '#bulk-discount-show' do
+      expect(page).to have_content(@bulk1.name)
+      expect(page).to have_content(@bulk1.percent)
+      expect(page).to have_content(@bulk1.quantity)
+    end 
   end
 end
