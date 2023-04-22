@@ -160,5 +160,3 @@ let!(:inv_6_transaction_s) { create_list(:transaction, 8, result: 1, invoice_id:
     end
   end
 end
-
-#save_and_open_page

@@ -27,7 +27,6 @@ class BulkDiscountsController < ApplicationController
   end
 
   def update
-    # require 'pry'; binding.pry
     @bulk_discount = BulkDiscount.find(params[:id])
     @merchant = Merchant.find(@bulk_discount.merchant_id)
     @bulk_discount.update(bulk_discount_params)
