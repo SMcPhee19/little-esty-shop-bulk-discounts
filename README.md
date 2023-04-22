@@ -45,12 +45,12 @@ Potential Refactor Opportunities
     1. User Story 1: Merchant Bulk Discounts Index
      As a merchant...
      When I visit my merchant dashboard
-    [ ] Then I see a link to view all my discounts
-    [ ] When I click this link
-    [ ] Then I am taken to my bulk discounts index page
-    [ ] Where I see all of my bulk discounts including their
-    [ ] percentage discount and quantity thresholds
-    [ ] And each bulk discount listed includes a link to its show page
+    [X] Then I see a link to view all my discounts
+    [X] When I click this link
+    [X] Then I am taken to my bulk discounts index page
+    [X] Where I see all of my bulk discounts including their
+    [X] percentage discount and quantity thresholds
+    [X] And each bulk discount listed includes a link to its show page
 
     2. Merchant Bulk Discount Create
     As a merchant...
@@ -109,7 +109,7 @@ Potential Refactor Opportunities
     When I visit the discounts index page
     [ ] I see a section with a header of "Upcoming Holidays"
     [ ] In this section the name and date of the next 3 upcoming US holidays are listed.
-    
+
     [ ] Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
 
 
