@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant bulk discount show page' do
+RSpec.describe 'merchant bulk discount edit page' do
   before(:each) do
     @merchant = create(:merchant)
     @merchant1 = create(:merchant)
@@ -55,29 +55,52 @@ RSpec.describe 'merchant bulk discount show page' do
     @inv_6_transaction_s = create_list(:transaction, 8, result: 1, invoice_id: @invoice6.id)
   end
 
-  it 'when in the merchant bulk discount show page, I see the bulk discount attributes' do
-    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}"
-    expect(page).to have_content('Bulk Discount: Show')
+  it 'in the bulk discount edit page, I see a form to edit the discount' do
+    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}/edit"
 
-    within '#bulk-discount-show' do
-      expect(page).to have_content(@bulk1.name)
-      expect(page).to have_content(@bulk1.percent)
-      expect(page).to have_content(@bulk1.quantity)
+    within '#discount-edit-form' do
+      expect(page).to have_field('name')
+      expect(page).to have_field('percent')
+      expect(page).to have_field('quantity')
     end
   end
 
-  it 'when in the merchant bulk discount show page, I see a link to edit the bulk discount' do
-    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}"
-    within '#bulk-discount-edit' do
-      expect(page).to have_link('Edit Bulk Discount')
+  it 'in the bulk discount edit page, I see the form is prepopulated with the bulk discount info' do
+    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}/edit"
+
+    within '#discount-edit-form' do
+      expect(find_field('name').value).to eq(@bulk1.name)
+      expect(find_field('percent').value).to eq(@bulk1.percent.to_s)
+      expect(find_field('quantity').value).to eq(@bulk1.quantity.to_s)
     end
   end
 
-  it 'when in the merchant bulk discount show page, I can click the link to edit the bulk discount' do
-    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}"
-    within '#bulk-discount-edit' do
-      click_link 'Edit Bulk Discount'
-      expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant, @bulk1))
-    end
+  it 'in the bulk discount edit page, I can edit all the bulk discount info and be returned to the disconts show page' do
+    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}/edit"
+      within '#discount-edit-form' do
+        fill_in 'name', with: '1% off 20 items'
+        fill_in 'percent', with: 1
+        fill_in 'quantity', with: 20
+        click_button 'Save'
+      end
+
+    expect(current_path).to eq("/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}")
+    expect(page).to have_content('1% off 20 items')
+    expect(page).to have_content('1')
+    expect(page).to have_content('20')
+  end
+
+  it 'in the bulk discount edit page, I can edit some of the information and be returned to the disconts show page' do
+    visit "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}/edit"
+      within '#discount-edit-form' do
+        fill_in 'name', with: '49% off 20 items'
+        fill_in 'quantity', with: 20
+        click_button 'Save'
+      end
+
+    expect(current_path).to eq("/merchants/#{@merchant.id}/bulk_discounts/#{@bulk1.id}")
+    expect(page).to have_content('49% off 20 items')
+    expect(page).to have_content('49')
+    expect(page).to have_content('20')
   end
 end

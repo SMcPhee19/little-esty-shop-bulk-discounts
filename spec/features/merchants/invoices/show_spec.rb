@@ -55,13 +55,13 @@ let!(:inv_6_transaction_s) { create_list(:transaction, 8, result: 1, invoice_id:
   describe 'Information related to the invoice' do
     it 'should display the invoice id, status, and created_at date' do
       visit merchant_invoice_path(merchant, invoice_1.id)
-      
+
       expect(page).to have_content(invoice_1.id)
       expect(page).to have_content(invoice_1.status)
       expect(page).to have_content(invoice_1.format_time_stamp)
-      
+
       visit merchant_invoice_path(merchant, invoice_2.id)
-      
+
       expect(page).to have_content(invoice_2.id)
       expect(page).to have_content(invoice_2.status)
       expect(page).to have_content(invoice_2.format_time_stamp)
@@ -70,18 +70,18 @@ let!(:inv_6_transaction_s) { create_list(:transaction, 8, result: 1, invoice_id:
 
     it 'should display the first and last name of the customer associated with this invoice.' do
       visit merchant_invoice_path(merchant, invoice_2.id)
-      
+
       expect(page).to have_content(invoice_2.customer_full_name)
       expect(invoice_2.customer.first_name).to appear_before(invoice_2.customer.last_name)
     end
-
+    
     it 'should display the total revenue of items on the invoice' do
       visit merchant_invoice_path(merchant, invoice_1.id)
-      
+
       expect(page).to have_content("Total Revenue: $180.0")
-      
+
       visit merchant_invoice_path(merchant, invoice_6.id)
-      
+
       expect(page).to have_content("Total Revenue: $999.88")
     end
   end
@@ -89,16 +89,16 @@ let!(:inv_6_transaction_s) { create_list(:transaction, 8, result: 1, invoice_id:
   describe 'Items associated with an invoice belonging to a merchant' do
     it "should display items' name, quantity, unit price" do
       visit merchant_invoice_path(merchant, invoice_1.id)
-      
+
       within("#invoice_items") do
         expect(page).to have_content(invoice_item_1.items_name)
         expect(page).to have_content(invoice_item_1.status)
         expect(page).to have_content(invoice_item_1.quantity)
         expect(page).to have_content(invoice_item_1.format_unit_price)
       end
-      
+
       visit merchant_invoice_path(merchant_1, invoice_6.id)
-      
+
       within("#invoice_items") do
         expect(page).to have_content(invoice_item_6.items_name)
         expect(page).to have_content(invoice_item_6.status)
@@ -113,46 +113,46 @@ let!(:inv_6_transaction_s) { create_list(:transaction, 8, result: 1, invoice_id:
     describe 'Selector shows invoice items statuses and they can be updated' do
       it 'should display the selector with a dropdown menu with status options' do
         visit merchant_invoice_path(merchant, invoice_1.id)
-        
+
         within("#invoice_items") do
           expect(page).to have_select(selected: 'pending')
           expect(page).to have_button('Update Item Status')
-          
+
           select("shipped", from: "Status")
           click_button('Update Item Status')
           expect(current_path).to eq(merchant_invoice_path(merchant, invoice_1.id))
         end
 
         visit merchant_invoice_path(merchant, invoice_6.id)
-        
+
         within("#items-#{invoice_item_6.item_id}") do
           expect(page).to have_select(selected: 'shipped')
           expect(page).to have_button('Update Item Status')
-    
+
           select("packaged", from: "Status")
           click_button('Update Item Status')
           expect(current_path).to eq(merchant_invoice_path(merchant, invoice_6.id))
         end
-        
+
         visit merchant_invoice_path(merchant, invoice_6.id)
-        
+
         within("#items-#{invoice_item_8.item_id}") do
           expect(page).to have_select(selected: 'packaged')
           expect(page).to have_button('Update Item Status')
-    
+
           select("pending", from: "Status")
           click_button('Update Item Status')
           expect(current_path).to eq(merchant_invoice_path(merchant, invoice_6.id))
         end
-        
+
         visit merchant_invoice_path(merchant, invoice_6.id)
-        
+
         expect(page).to have_select(selected: 'packaged')
         expect(page).to have_select(selected: 'pending')
         expect(page).to_not have_select(selected: 'shipped')
-        
+
         visit merchant_invoice_path(merchant, invoice_1.id)
-        
+
         expect(page).to_not have_select(selected: 'packaged')
         expect(page).to_not have_select(selected: 'pending')
         expect(page).to have_select(selected: 'shipped')
@@ -160,5 +160,3 @@ let!(:inv_6_transaction_s) { create_list(:transaction, 8, result: 1, invoice_id:
     end
   end
 end
-
-#save_and_open_page
