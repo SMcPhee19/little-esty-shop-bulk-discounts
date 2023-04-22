@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "/merchants/:id/dashboard", to: 'merchant/dashboards#show'
   
   resources :merchants, except: [:index, :show, :edit, :destroy, :new, :create, :update]  do
+    resources :bulk_discounts
     resources :items, only: [:index, :show, :edit, :update, :new, :create], controller: "merchant/items"
     resources :invoices, only: [:index, :show], controller: "merchant/invoices"
     resources :invoice_items, only: [:update], controller: "merchant/invoice_items"

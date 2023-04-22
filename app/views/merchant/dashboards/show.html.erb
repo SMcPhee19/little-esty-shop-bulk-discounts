@@ -1,4 +1,4 @@
-<h2><%= @merchant.name %></h2> <%= image_tag @merchant_image.image_url, cache: true %>
+<h2><%= @merchant.name %></h2> <%# image_tag @merchant_image.image_url, cache: true %>
 
 <div class="item_column">
   <%= content_tag :div, id: "item_index" do %>
@@ -10,6 +10,10 @@
   <%= content_tag :div, id: "invoice_index" do %>
   <%= link_to "My Invoices", merchant_invoices_path(@merchant) %>
   <% end %>
+</div>
+
+<div id="bulk-discount">
+  <%= link_to 'My Bulk Discounts', merchant_bulk_discounts_path(@merchant) %>
 </div>
 
 <div class="best-customers">
