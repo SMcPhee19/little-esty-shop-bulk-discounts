@@ -30,28 +30,28 @@ class Merchant < ApplicationRecord
 
   def top_selling_date
     self.invoices
-      .joins(:invoice_items, :transactions)
-      .where(transactions: {result: :success})
-      .group('invoices.created_at')
-      .select('invoices.created_at, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
-      .order('revenue DESC, created_at DESC')
-      .first
-      .format_time_stamp
+        .joins(:invoice_items, :transactions)
+        .where(transactions: { result: :success })
+        .group('invoices.created_at')
+        .select('invoices.created_at, SUM(invoice_items.quantity * invoice_items.unit_price) AS revenue')
+        .order('revenue DESC, created_at DESC')
+        .first
+        .format_time_stamp
   end
 
   def top_five_customers
-    Customer.joins(invoices: [:transactions, :invoice_items => :item])  
-    .select("customers.*, COUNT(result) as transactions_count")
-    .group(:id)
-    .where("transactions.result = ? AND items.merchant_id = ?", 1, self.id)
-    .order(transactions_count: :desc).limit(5)
+    Customer.joins(invoices: [:transactions, :invoice_items => :item])
+            .select('customers.*, COUNT(result) as transactions_count')
+            .group(:id)
+            .where('transactions.result = ? AND items.merchant_id = ?', 1, self.id)
+            .order(transactions_count: :desc).limit(5)
   end
 
   def unshipped_items
     Item.joins(invoices: [:invoice_items])
-    .select("items.*, invoices.created_at as creation_date, invoice_items.status")
-    .where("invoice_items.status != 2 AND items.merchant_id = ?", self.id)
-    .order(:creation_date)
+        .select('items.*, invoices.created_at as creation_date, invoice_items.status')
+        .where('invoice_items.status != 2 AND items.merchant_id = ?', self.id)
+        .order(:creation_date)
   end
 
   def enabled_items
@@ -64,10 +64,10 @@ class Merchant < ApplicationRecord
 
   def top_5_items
     Item.joins(invoices: :transactions)
-    .where('transactions.result = ? and items.merchant_id = ?', "1", self.id)
-    .select("items.*, SUM(invoice_items.unit_price * invoice_items.quantity) as total_revenue")
-    .group(:id)
-    .order(total_revenue: :desc)
-    .limit(5)
+        .where('transactions.result = ? and items.merchant_id = ?', "1", self.id)
+        .select("items.*, SUM(invoice_items.unit_price * invoice_items.quantity) as total_revenue")
+        .group(:id)
+        .order(total_revenue: :desc)
+        .limit(5)
   end
 end
