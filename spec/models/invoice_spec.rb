@@ -108,9 +108,9 @@ RSpec.describe Invoice, type: :model do
 
         @invoice1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
 
-        @ii1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 1000, status: 2)
-        @ii2 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 1000, status: 1)
-        @ii3 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_3.id, quantity: 10, unit_price: 2000, status: 1)
+        @ii1 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item1.id, quantity: 9, unit_price: 1000, status: 2)
+        @ii2 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item2.id, quantity: 1, unit_price: 1000, status: 1)
+        @ii3 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item3.id, quantity: 10, unit_price: 2000, status: 1)
 
         @bulk_discount1 = BulkDiscount.create!(name: '50% off 5', percent: 50, quantity: 5, merchant_id: @merchant1.id)
         @bulk_discount2 = BulkDiscount.create!(name: '25% off 10', percent: 25, quantity: 10, merchant_id: @merchant2.id)
@@ -121,7 +121,7 @@ RSpec.describe Invoice, type: :model do
       end
 
       it '#total_rev_with_discount' do
-        expect(@invoice1.total_rev_with_discount).to eq(205)
+        expect(@invoice1.total_rev_with_discount).to eq('205.0')
       end
     end
   end
