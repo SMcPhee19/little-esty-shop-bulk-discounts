@@ -15,4 +15,14 @@ class InvoiceItem < ApplicationRecord
   def items_name
     item.name
   end
+
+  def discount_applies?
+    quantity_thresholds = item.merchant.bulk_discounts.pluck(:quantity)
+    quantity_thresholds.any? { |q| quantity >= q }
+  end
+
+  def discount_applied
+    bulk_discounts.where('? >= bulk_discounts.quantity', self.quantity)
+                  .order(percent: :desc).take
+  end
 end
