@@ -3,6 +3,7 @@
 <br>
 <ul><b>Created on:</b> <%= @invoice.format_time_stamp %></ul>
 <ul><b>Total Revenue:</b> $<%= @invoice.total_revenue %></ul>
+<ul><b>Total Revenue After Discounts:</b> $<%= @total_discount %></ul>
 <ul><h2>Customer:</h2>
 <ul style="font-size:20px;"><%= @invoice.customer_full_name%></ul>
 <ul style="font-size:20px;">123 Main St.</ul>

@@ -89,9 +89,9 @@ Potential Refactor Opportunities
     6. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
     As a merchant
     When I visit my merchant invoice show page
-    [ ] Then I see the total revenue for my merchant from this invoice (not including discounts)
-    [ ] And I see the total discounted revenue for my merchant from this invoice      
-    [ ] Which includes bulk discounts in the calculation
+    [X] Then I see the total revenue for my merchant from this invoice (not including discounts)
+    [X] And I see the total discounted revenue for my merchant from this invoice      
+    [X] Which includes bulk discounts in the calculation
 
     7. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
     As a merchant

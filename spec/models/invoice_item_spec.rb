@@ -5,6 +5,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should belong_to :invoice }
     it { should belong_to :item }
     it { should have_many(:transactions).through(:invoice) }
+    it { should have_many(:bulk_discounts).through(:item) }
   end
 
   describe 'Instance Methods' do
@@ -41,9 +42,9 @@ RSpec.describe InvoiceItem, type: :model do
     end
 
     it '#items_name' do
-        expect(invoice_item_1.items_name).to eq("Grandaddy Purple")
-        expect(invoice_item_2.items_name).to eq("Girl Scout Cookies")
-        expect(invoice_item_3.items_name).to eq("OG Kush")
+      expect(invoice_item_1.items_name).to eq("Grandaddy Purple")
+      expect(invoice_item_2.items_name).to eq("Girl Scout Cookies")
+      expect(invoice_item_3.items_name).to eq("OG Kush")
     end
   end
 end
