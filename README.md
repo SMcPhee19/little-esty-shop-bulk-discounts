@@ -96,7 +96,7 @@ Potential Refactor Opportunities
     7. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
     As a merchant
     When I visit my merchant invoice show page
-    [ ] Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+    [X] Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
 
     8. Admin Invoice Show Page: Total Revenue And Discounted Revenue
     As an admin
@@ -112,4 +112,4 @@ Potential Refactor Opportunities
 
     [ ] Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
 
-
+        
