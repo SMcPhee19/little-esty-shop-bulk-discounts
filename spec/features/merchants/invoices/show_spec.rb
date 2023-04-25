@@ -188,8 +188,39 @@ RSpec.describe 'Merchant/invoice show page', type: :feature do
 
     it 'when in the merchants invoice show page, I see the total discounted revenue for the merchant' do
       visit merchant_invoice_path(@merchant1, @invoice1.id)
-      save_and_open_page
       expect(page).to have_content(@invoice1.total_rev_with_discount)
+    end
+
+    it 'when in the merchants invoice show page, Next to each invoice item, I see a link to the show page for the 
+    bulk discount that was applied (if any)' do
+      visit merchant_invoice_path(@merchant1, @invoice1.id)
+
+      within "#items-#{@ii1.item.id}" do
+        expect(page).to have_link('Bulk Discount Applied')
+      end
+
+      within "#items-#{@ii2.item.id}" do
+        expect(page).to_not have_link('Bulk Discount Applied')
+      end
+
+      within "#items-#{@ii3.item.id}" do
+        expect(page).to have_link('Bulk Discount Applied')
+      end
+    end
+
+    it 'when in the merchants invoice show page, when I click the link to the applied bulk discount 
+    I am take to that bulk discounts show page' do
+      visit merchant_invoice_path(@merchant1, @invoice1.id)
+      within "#items-#{@ii1.item.id}" do
+        click_link('Bulk Discount Applied')
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount1))
+      end
+
+      visit merchant_invoice_path(@merchant1, @invoice1.id)
+      within "#items-#{@ii3.item.id}" do
+        click_link('Bulk Discount Applied')
+        expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @bulk_discount2))
+      end
     end
   end
 end

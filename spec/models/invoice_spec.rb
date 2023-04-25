@@ -78,7 +78,7 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice_5.total_revenue).to eq("947.41")
       end
     end
-    
+
     describe 'additional instance methods' do
       let!(:customer_1) { create(:customer, first_name: 'Branden', last_name: 'Smith') }
       let!(:customer_2) { create(:customer, first_name: 'Reilly', last_name: 'Robertson') }
@@ -106,7 +106,7 @@ RSpec.describe Invoice, type: :model do
 
         @customer1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
 
-        @invoice1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+        @invoice1 = Invoice.create!(customer_id: @customer1.id, status: 2, created_at: "2012-03-27 14:54:09")
 
         @ii1 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item1.id, quantity: 9, unit_price: 1000, status: 2)
         @ii2 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item2.id, quantity: 1, unit_price: 1000, status: 1)
