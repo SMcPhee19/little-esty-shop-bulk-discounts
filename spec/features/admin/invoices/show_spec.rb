@@ -104,4 +104,40 @@ RSpec.describe 'admin_invoice_show3333', type: :feature do
       end
     end
   end
+
+  describe 'Admin Total Discounts' do
+    before(:each) do
+      @merchant1 = Merchant.create!(name: 'Hair Care')
+      @merchant2 = Merchant.create!(name: 'another merchant')
+
+      @item1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+      @item2 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+      @item3 = Item.create!(name: "hoodie", description: "very warm", unit_price: 20, merchant_id: @merchant2.id)
+
+      @customer1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+      @invoice1 = Invoice.create!(customer_id: @customer1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+      @ii1 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item1.id, quantity: 9, unit_price: 1000, status: 2)
+      @ii2 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item2.id, quantity: 1, unit_price: 1000, status: 1)
+      @ii3 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item3.id, quantity: 10, unit_price: 2000, status: 1)
+
+      @bulk_discount1 = BulkDiscount.create!(name: '50% off 5', percent: 50, quantity: 5, merchant_id: @merchant1.id)
+      @bulk_discount2 = BulkDiscount.create!(name: '25% off 10', percent: 25, quantity: 10, merchant_id: @merchant2.id)
+    end
+
+    it 'when visiting the admin invoice show page, I see the total revenue from this invoice' do
+      visit admin_invoice_path(@invoice1.id)
+      within('div#total_revenue') do
+        expect(page).to have_content(@invoice1.total_revenue)
+      end
+    end
+
+    it 'when visiting the admin invoice show page, I see the total discounted revenue from this invoice' do
+      visit admin_invoice_path(@invoice1.id)
+      within('div#total_revenue') do
+        expect(page).to have_content(@invoice1.total_rev_with_discount)
+      end
+    end
+  end
 end
