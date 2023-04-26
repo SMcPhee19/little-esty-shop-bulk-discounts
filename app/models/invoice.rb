@@ -12,6 +12,9 @@ class Invoice < ApplicationRecord
 
   def self.invoice_items_not_shipped
     select('invoices.*').joins(:invoice_items).where(invoice_items: { status: ['pending', 'packaged'] })
+    # selecting all of the invoices
+    # joining the them on the invoice_items table
+    # where the status of the invoice_item is either pending or packaged
   end
 
   def format_time_stamp
@@ -40,7 +43,7 @@ class Invoice < ApplicationRecord
                  # Groups the invoice_items by their id
                  # This makes sure that the calculation is done to each invoice_item
                  .sum { |invoice_item| invoice_item.quantity * invoice_item.unit_price * invoice_item.discount / 10_000.0 }
-                 # Caclulate the total cost of each invoice_item 
+                 # Caclulate the total cost of each invoice_item
                  # By multiplying the quantity of the ii by the unit_price of said ii and the discount the ii qualifies for
                  # Then dividing by 10_000 to get the correct decimal
                  # (since my discounts are stored as integers, not floats, that is a REALLY big number)

@@ -13,6 +13,7 @@ Item.destroy_all
 Customer.destroy_all
 Merchant.destroy_all
 BulkDiscount.destroy_all
+system("rails csv_load:all")
 
 @merchant1 = Merchant.create!(name: 'Hair Care')
 @merchant2 = Merchant.create!(name: 'another merchant')
