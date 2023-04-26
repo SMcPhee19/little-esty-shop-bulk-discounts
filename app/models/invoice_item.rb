@@ -33,7 +33,7 @@ class InvoiceItem < ApplicationRecord
     bulk_discounts.where('? >= bulk_discounts.quantity', self.quantity)
                   # querying the bulk_discounts table to find any
                   # records where the quanity is less than or equal to the quantity of the invoice item
-                  .order(percent: :desc).take 
+                  .order(percent: :desc).take
                   # .take is taking the first record from the ordered results/
                   # does the same thing as .first
   end

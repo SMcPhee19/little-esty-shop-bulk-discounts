@@ -30,11 +30,20 @@ class Item < ApplicationRecord
   
   def best_selling_date
     invoice = Item.joins(invoices: :transactions)
+    # joins the items table to the invoices table to the transactions table
     .where('transactions.result = ? and invoice_items.item_id = ?', "1", self.id)
+    # Only takes successful transactions and the invoice_items that belong to the item
     .select("invoices.*, SUM(invoice_items.unit_price * invoice_items.quantity) as total_revenue")
+    # selects all of the invoices
+    # sums the total of the invoice_items unit price and mulitplies it by the quantity
+    # aliases it as total_revenue
     .group("invoices.id")
+    # group the invoices by their id
     .order(total_revenue: :desc)
+    # orders the invoices by their total_revenue highest to lowest
     .limit(1)
+    # only takes the top result
     invoice.first.created_at.strftime("%A, %B %e, %Y")
+    # formats the date of the invoice
   end
 end
