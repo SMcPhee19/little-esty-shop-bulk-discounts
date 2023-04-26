@@ -11,8 +11,12 @@ class Customer < ApplicationRecord
 
   def self.top_5_successful_transactions
     select("customers.*, COUNT(transactions.id) AS successful_transactions_count")
+      # Selecting all of the customers
+      # Counting the transactions and aliasing it as successful_transactions_count
       .joins(:transactions)
+      # Joining the customers to transactions
       .where(transactions: {result: :success})
+      # Only selecting the transactions that were successful
       .group("customers.id")
       .order("successful_transactions_count DESC")
       .limit(5)
