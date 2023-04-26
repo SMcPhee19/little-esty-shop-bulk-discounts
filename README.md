@@ -51,6 +51,7 @@ Potential Refactor Opportunities
     [X] Where I see all of my bulk discounts including their
     [X] percentage discount and quantity thresholds
     [X] And each bulk discount listed includes a link to its show page
+    - Link: http://localhost:3000/merchants/1/dashboard
 
     2. Merchant Bulk Discount Create
     As a merchant...
@@ -61,6 +62,7 @@ Potential Refactor Opportunities
     [X]When I fill in the form with valid data
     [X]Then I am redirected back to the bulk discount index
     [X]And I see my new bulk discount listed
+    - Link: http://localhost:3000/merchants/1/bulk_discounts
 
     3. Merchant Bulk Discount Delete
     As a merchant
@@ -69,11 +71,13 @@ Potential Refactor Opportunities
     [X] When I click this link
     [X] Then I am redirected back to the bulk discounts index page
     [X] And I no longer see the discount listed
+    - Link: http://localhost:3000/merchants/1/bulk_discounts
 
     4. Merchant Bulk Discount Show
     As a merchant
     When I vivit my bulk discount show page
     [X] Then I see the bulk discount's quantity threshold and percentage discount
+    - Link: http://localhost:3000/merchants/1/bulk_discounts/1
 
     5. Merchant Bulk Discount Edit    
     As a merchant
@@ -85,6 +89,7 @@ Potential Refactor Opportunities
     [X] When I change any/all of the information and click submit
     [X] Then I am redirected to the bulk discount's show page
     [X] And I see that the discount's attributes have been updated
+    - Link: http://localhost:3000/merchants/1/bulk_discounts/1
 
     6. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
     As a merchant
@@ -92,17 +97,20 @@ Potential Refactor Opportunities
     [X] Then I see the total revenue for my merchant from this invoice (not including discounts)
     [X] And I see the total discounted revenue for my merchant from this invoice      
     [X] Which includes bulk discounts in the calculation
+    - Link: http://localhost:3000/merchants/1/invoices/1
 
     7. Merchant Invoice Show Page: Total Revenue and Discounted Revenue
     As a merchant
     When I visit my merchant invoice show page
     [X] Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+    - Link: http://localhost:3000/merchants/1/invoices/1
 
     8. Admin Invoice Show Page: Total Revenue And Discounted Revenue
     As an admin
     When I visit an admin invoice show page
     [X] Then I see the total revenue from this invoice (not including discounts)
     [X] And I see the total discounted revenue from this invoice which includes bulk discounts in the calculation
+    - Link: http://localhost:3000/admin/invoices/1
 
     9. Holidays API
     As a merchant
@@ -110,6 +118,8 @@ Potential Refactor Opportunities
     [X] I see a section with a header of "Upcoming Holidays"
     [X] In this section the name and date of the next 3 upcoming US holidays are listed.
 
-    [ ] Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
+    [X] Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
+
+    - Link: http://localhost:3000/merchants/1/bulk_discounts
 
         
