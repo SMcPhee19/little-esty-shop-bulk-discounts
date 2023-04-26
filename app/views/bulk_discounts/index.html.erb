@@ -1,7 +1,15 @@
 <h1>My Bulk Discounts</h1>
 <br>
+<div id="upcoming-holidays">
+  <h2>Upcoming Holidays: 
+      <% @upcoming.each do |holiday| %>
+        <p><%= holiday.name %> <%= holiday.date %></p>
+      <% end %>
+  </h2>
+</div>
+<br>
 <div id="new-merchant-bulk">
-  <h2> <%= link_to "New Bulk Discount", "/merchants/#{@merchant.id}/bulk_discounts/new" %> </h2>
+  <h3> <%= link_to "New Bulk Discount", "/merchants/#{@merchant.id}/bulk_discounts/new" %> </h3>
 </div>
 <br>
 <div id="merchant-bulk">

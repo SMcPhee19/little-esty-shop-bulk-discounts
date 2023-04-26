@@ -127,4 +127,24 @@ RSpec.describe 'merchant bulk discount index page' do
       expect(page).to_not have_content(@bulk2.name)
     end
   end
+
+  it 'when in the bulk discount index page, I see a section with the header "Upcoming Holidays"' do
+    visit merchant_bulk_discounts_path(@merchant)
+    within '#upcoming-holidays' do
+      expect(page).to have_content('Upcoming Holidays')
+    end
+  end
+
+  it 'when in the bulk discount index page, I see a list of the next 3 upcoming holidays' do
+    visit merchant_bulk_discounts_path(@merchant)
+
+    holidays = HolidaySearch.new.holiday_finder
+
+    within '#upcoming-holidays' do
+      holidays.each do |holiday|
+        expect(page).to have_content(holiday.name)
+        expect(page).to have_content(holiday.date)
+      end
+    end
+  end
 end
