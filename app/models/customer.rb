@@ -18,7 +18,10 @@ class Customer < ApplicationRecord
       .where(transactions: {result: :success})
       # Only selecting the transactions that were successful
       .group("customers.id")
+      # Grouping the customers by their id
       .order("successful_transactions_count DESC")
+      # Ordering the customers by the number of successful transactions they have
       .limit(5)
+      # Only taking the top 5
   end
 end

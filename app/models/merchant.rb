@@ -64,10 +64,18 @@ class Merchant < ApplicationRecord
 
   def top_5_items
     Item.joins(invoices: :transactions)
+    # joins the items table to the invoices table to the transactions table
         .where('transactions.result = ? and items.merchant_id = ?', "1", self.id)
+        # Only takes successful transactions and items that belong that merchant
         .select("items.*, SUM(invoice_items.unit_price * invoice_items.quantity) as total_revenue")
+        # selects all of the items
+        # sums the total of the invoice_items unit price and mulitplies it by the quantity
+        # aliases it as total_revenue
         .group(:id)
+        # groups by the item id
         .order(total_revenue: :desc)
+        # orders the invoices by their total_revenue highest to lowest
         .limit(5)
+        # only takes the top five results
   end
 end
