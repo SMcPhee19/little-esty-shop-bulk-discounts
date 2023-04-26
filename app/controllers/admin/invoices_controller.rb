@@ -5,6 +5,7 @@ class Admin::InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
+    @total_discount = @invoice.total_rev_with_discount
   end
 
   def update

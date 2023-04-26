@@ -1,0 +1,13 @@
+<h1>Bulk Discount: Show</h1>
+<br>
+<div id="bulk-discount-show">
+  <h2>Bulk Discount # <%= @bulk_discount.id %></h1>
+  <br>
+  <h3>Name: <%= @bulk_discount.name %> </h3>
+  <p>Quantity Threshold: <%= @bulk_discount.quantity %> </p>
+  <p>Percent Discount: <%= @bulk_discount.percent %> % </p>
+</div>
+<div id="bulk-discount-edit">
+  <h2> <%= link_to "Edit Bulk Discount", edit_merchant_bulk_discount_path(@merchant, @bulk_discount) %> </h2>
+</div>
+

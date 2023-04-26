@@ -78,7 +78,7 @@ RSpec.describe Invoice, type: :model do
         expect(@invoice_5.total_revenue).to eq("947.41")
       end
     end
-    
+
     describe 'additional instance methods' do
       let!(:customer_1) { create(:customer, first_name: 'Branden', last_name: 'Smith') }
       let!(:customer_2) { create(:customer, first_name: 'Reilly', last_name: 'Robertson') }
@@ -92,6 +92,36 @@ RSpec.describe Invoice, type: :model do
         expect(invoice_1.customer_full_name).to eq("Branden Smith")
         expect(invoice_2.customer_full_name).to eq("Reilly Robertson")
         expect(invoice_3.customer_full_name).to eq("Grace Chavez")
+      end
+    end
+
+    describe 'bulk discount methods' do
+      before(:each) do
+        @merchant1 = Merchant.create!(name: 'Hair Care')
+        @merchant2 = Merchant.create!(name: 'another merchant')
+
+        @item1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: @merchant1.id, status: 1)
+        @item2 = Item.create!(name: "Butterfly Clip", description: "This holds up your hair but in a clip", unit_price: 5, merchant_id: @merchant1.id)
+        @item3 = Item.create!(name: "hoodie", description: "very warm", unit_price: 20, merchant_id: @merchant2.id)
+
+        @customer1 = Customer.create!(first_name: 'Joey', last_name: 'Smith')
+
+        @invoice1 = Invoice.create!(customer_id: @customer1.id, status: 2, created_at: "2012-03-27 14:54:09")
+
+        @ii1 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item1.id, quantity: 9, unit_price: 1000, status: 2)
+        @ii2 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item2.id, quantity: 1, unit_price: 1000, status: 1)
+        @ii3 = InvoiceItem.create!(invoice_id: @invoice1.id, item_id: @item3.id, quantity: 10, unit_price: 2000, status: 1)
+
+        @bulk_discount1 = BulkDiscount.create!(name: '50% off 5', percent: 50, quantity: 5, merchant_id: @merchant1.id)
+        @bulk_discount2 = BulkDiscount.create!(name: '25% off 10', percent: 25, quantity: 10, merchant_id: @merchant2.id)
+      end
+
+      it '#total_discounts' do
+        expect(@invoice1.total_discounts).to eq(95)
+      end
+
+      it '#total_rev_with_discount' do
+        expect(@invoice1.total_rev_with_discount).to eq('205.0')
       end
     end
   end
