@@ -18,9 +18,9 @@ class InvoiceItem < ApplicationRecord
 
   def discount_applies?
     quantity_thresholds = item.merchant.bulk_discounts 
-    # quantity_thresholds is set to the array of quanity values from the bulk_discounts table that came from .pluck
     # item.merchant.bulk_discounts is querying the
     # bulk_discounts table to find all the discounts associated with the merchant of the current item.
+    # quantity_thresholds is set to the array of quanity values from the bulk_discounts table that came from .pluck
                               .pluck(:quantity)
     # .pluck is taking the quantity column from the bulk_discounts table and returning an array of the values
     quantity_thresholds.any? { |q| quantity >= q }

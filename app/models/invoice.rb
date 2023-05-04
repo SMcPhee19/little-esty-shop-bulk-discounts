@@ -45,7 +45,7 @@ class Invoice < ApplicationRecord
                  .sum { |invoice_item| invoice_item.quantity * invoice_item.unit_price * invoice_item.discount / 10_000.0 }
                  # Caclulate the total cost of each invoice_item
                  # By multiplying the quantity of the ii by the unit_price of said ii and the discount the ii qualifies for
-                 # Then dividing by 10_000 to get the correct decimal
+                 # Then dividing by 10_000 to get the correct decimal position
                  # (since my discounts are stored as integers, not floats, that is a REALLY big number)
                  # Then summing all of the invoice_items together to get the total discount for the invoice
   end
